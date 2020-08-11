@@ -1,0 +1,44 @@
+{
+  "name": "@pedro-l9/functional-snake",
+  "version": "0.1.0",
+  "description": "A snake game engine written in a functional-ish way",
+  "repository": "pedro-l9/functional-snake",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "lint:ci": "eslint '*/**/*.{js,ts}' --quiet",
+    "lint": "eslint '*/**/*.{js,ts}' --quiet --fix",
+    "format": "prettier"
+  },
+  "author": "Pedro Lacerda",
+  "license": "MIT",
+  "keywords": [
+    "functional",
+    "snake",
+    "game",
+    "pedro-l9"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "npm run format -- --write"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
+  }
+}
