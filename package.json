@@ -7,7 +7,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --watchAll --coverage",
-    "test:ci": "CI=true jest --coverage && codecov --token=$CODECOV_TOKEN",
+    "test:ci": "CI=true npm test -- --watchAll=false",
+    "test:ci:report": "npm run test:ci && codecov --token=$CODECOV_TOKEN",
     "prepublish": "tsc",
     "lint": "eslint",
     "lint:ci": "eslint '*/**/*.{js,ts}' --quiet",
