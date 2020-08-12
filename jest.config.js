@@ -3,4 +3,5 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   resetMocks: true,
+  collectCoverageFrom: ['src/**/*.ts*'],
 };

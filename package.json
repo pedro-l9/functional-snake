@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest --passWithNoTests --watchAll --coverage",
+    "test": "jest --watchAll --coverage",
     "test:ci": "CI=true yarn test --watchAll=false",
     "prepublish": "tsc",
     "lint": "eslint",

@@ -1,6 +1,6 @@
-import { MOVES } from './constants';
-import { willEat, nextHead, nextSnake, nextApple, nextMoves } from './core';
-import * as utils from './utils';
+import { MOVES } from '../constants';
+import { willEat, nextHead, nextSnake, nextApple, nextMoves } from '../core';
+import * as utils from '../utils';
 
 const DEFAULT_CANVAS: Canvas = Object.freeze({
   cols: 20,

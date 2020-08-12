@@ -3,8 +3,8 @@ import {
   hasSnakeCrashed,
   removeIncomingOppositeMoves,
   isMoveOpposite,
-} from './utils';
-import { MOVES } from './constants';
+} from '../utils';
+import { MOVES } from '../constants';
 
 describe('Test the isMoveOpposite utility that determines wheter a move is the opposite of the other', () => {
   test('That the opposite of UP is DOWN', () => {
