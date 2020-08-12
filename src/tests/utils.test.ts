@@ -3,8 +3,31 @@ import {
   hasSnakeCrashed,
   removeIncomingOppositeMoves,
   isMoveOpposite,
+  getRandomValue,
+  inputToMove,
+  getRandomPixel,
+  getInitialState,
 } from '../utils';
 import { MOVES } from '../constants';
+
+const DEFAULT_CANVAS: Canvas = Object.freeze({
+  cols: 15,
+  rows: 20,
+});
+
+describe('Test the inputToMove utility that maps inputs to moves', () => {
+  it('Should return the move that corresponds to that input', () => {
+    const upInputResultingMove = inputToMove('UP');
+    const downInputResultingMove = inputToMove('DOWN');
+    const rightInputResultingMove = inputToMove('RIGHT');
+    const leftInputResultingMove = inputToMove('LEFT');
+
+    expect(upInputResultingMove).toEqual(MOVES['UP']);
+    expect(downInputResultingMove).toEqual(MOVES['DOWN']);
+    expect(rightInputResultingMove).toEqual(MOVES['RIGHT']);
+    expect(leftInputResultingMove).toEqual(MOVES['LEFT']);
+  });
+});
 
 describe('Test the isMoveOpposite utility that determines wheter a move is the opposite of the other', () => {
   test('That the opposite of UP is DOWN', () => {
@@ -127,5 +150,73 @@ describe('Test the removeIncomingOppositeMoves utility function', () => {
     ]);
 
     expect(newIncomingMoves).toEqual([]);
+  });
+});
+
+describe('Test the getRandomValue utility function', () => {
+  it('Should return a random value between and including the max and min values provided', () => {
+    const randomSpy = jest.spyOn(Math, 'random');
+    randomSpy.mockReturnValueOnce(1).mockReturnValueOnce(0);
+
+    const highPseudoRandomNumber = getRandomValue(0, 10);
+    const lowPseudoRandomNumber = getRandomValue(0, 10);
+
+    expect(randomSpy).toHaveBeenCalledTimes(2);
+    expect(highPseudoRandomNumber).toEqual(10);
+    expect(lowPseudoRandomNumber).toEqual(0);
+  });
+});
+
+describe('Test the getRandomPixel utility function', () => {
+  it('Should return a random pixel inside the given canvas', () => {
+    const randomSpy = jest.spyOn(Math, 'random');
+    randomSpy
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0);
+
+    const upperBoundaryPseudoRandomPixel = getRandomPixel(DEFAULT_CANVAS);
+    const lowerBoundaryPseudoRandomPixel = getRandomPixel(DEFAULT_CANVAS);
+
+    expect(randomSpy).toHaveBeenCalledTimes(4);
+    expect(upperBoundaryPseudoRandomPixel).toEqual({
+      x: DEFAULT_CANVAS.cols - 1,
+      y: DEFAULT_CANVAS.rows - 1,
+    });
+    expect(lowerBoundaryPseudoRandomPixel).toEqual({ x: 0, y: 0 });
+  });
+});
+
+describe('Test the getInitalState utility function', () => {
+  it(`Should return a state with the gameFlags equaling false, 
+      the snake and the apple in random positions, 
+      the given canvas and the moves array with a single STOPPED move`, () => {
+    const randomSpy = jest.spyOn(Math, 'random');
+    randomSpy
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(1)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0);
+
+    const expectedInitialState = {
+      frame: {
+        gameStarted: false,
+        gameOver: false,
+        snake: [
+          {
+            x: DEFAULT_CANVAS.cols - 1,
+            y: DEFAULT_CANVAS.rows - 1,
+          },
+        ],
+        apple: { x: 0, y: 0 },
+      },
+      canvas: DEFAULT_CANVAS,
+      moves: [MOVES['STOPPED']],
+    };
+
+    const initalState = getInitialState(DEFAULT_CANVAS);
+
+    expect(initalState).toEqual(expectedInitialState);
   });
 });
