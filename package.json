@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest --passWithNoTests --watchAll --silent --coverage",
+    "test": "jest --passWithNoTests --watchAll --coverage",
     "test:ci": "CI=true yarn test --watchAll=false",
     "prepublish": "tsc",
     "lint": "eslint",
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.9",
+    "@types/ramda": "^0.27.14",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "eslint": "^7.6.0",
@@ -45,5 +46,8 @@
     "prettier": "^2.0.5",
     "ts-jest": "^26.2.0",
     "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "ramda": "^0.27.1"
   }
 }
