@@ -1,5 +1,12 @@
 import { MOVES } from '../constants';
-import { willEat, nextHead, nextSnake, nextApple, nextMoves } from '../core';
+import {
+  willEat,
+  nextHead,
+  nextSnake,
+  nextApple,
+  nextMoves,
+  willCrash,
+} from '../core';
 import * as utils from '../utils';
 import { State, Canvas } from '../types';
 
@@ -34,6 +41,38 @@ describe('Test the function that determines whether the snake is going to eat an
     const testState = { ...INITIAL_STATE, moves: [MOVES['RIGHT']] };
 
     expect(willEat(testState)).toEqual(true);
+  });
+});
+
+describe('Test the function that determines whether the snake will crash on itself on the next frame', () => {
+  const scenarioState = {
+    ...INITIAL_STATE,
+    frame: {
+      ...INITIAL_STATE.frame,
+      snake: [
+        { x: 1, y: 5 },
+        { x: 2, y: 5 },
+        { x: 3, y: 5 },
+        { x: 3, y: 6 },
+        { x: 2, y: 6 },
+        { x: 1, y: 6 },
+        { x: 0, y: 6 },
+      ],
+    },
+    moves: [MOVES['UP']],
+  };
+
+  it('Should return false when there is nothing on the space on which the snake is going to be', () => {
+    expect(willCrash(scenarioState)).toEqual(false);
+  });
+
+  it('Should return true when there is some part of the snakes body on the space on which it is going to be', () => {
+    const testState = {
+      ...scenarioState,
+      moves: [MOVES['DOWN']],
+    };
+
+    expect(willCrash(testState)).toEqual(true);
   });
 });
 
@@ -227,18 +266,12 @@ describe('Test the function that determines the position of the next apple', () 
 });
 
 describe('Test the function that determines the next move queue', () => {
-  it('Should stop the move queue if the snake has crashed regardless of the users input', () => {
+  it('Should stop the move queue if the game is over regardless of the users input', () => {
     const testState: State = {
       ...INITIAL_STATE,
       frame: {
         ...INITIAL_STATE.frame,
-        snake: [
-          { x: 1, y: 6 },
-          { x: 2, y: 5 },
-          { x: 3, y: 5 },
-          { x: 3, y: 6 },
-          { x: 1, y: 6 },
-        ],
+        gameOver: true,
       },
       moves: [MOVES['UP']],
     };

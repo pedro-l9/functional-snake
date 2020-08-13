@@ -12,16 +12,15 @@ import {
   applySpec,
   propEq,
   prop,
-  pathOr,
   map,
   always,
+  includes,
 } from 'ramda';
 
 import {
   scopeValue,
   inputToMove,
   getRandomPixel,
-  hasSnakeCrashed,
   removeIncomingOppositeMoves,
   getFirst,
 } from './utils';
@@ -30,6 +29,9 @@ import { State, Pixel, Snake, Input, Move, Canvas } from './types';
 
 export const willEat = (state: State): boolean =>
   equals(nextHead(state), state.frame.apple);
+
+export const willCrash = (state: State): boolean =>
+  includes(nextHead(state), drop(1, nextSnake(state)));
 
 export const nextHead = ({
   frame: { snake },
@@ -49,7 +51,7 @@ export const nextApple = (state: State): Pixel =>
   willEat(state) ? getRandomPixel(state.canvas) : state.frame.apple;
 
 export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
-  hasSnakeCrashed(state.frame.snake)
+  state.frame.gameOver
     ? [MOVES['STOPPED']]
     : pipe(
         concat(
@@ -69,10 +71,7 @@ export const nextState = (state: State, inputs: Input[]): State =>
   applySpec<State>({
     frame: {
       gameStarted: complement(propEq('moves', [])),
-      gameOver: pipe<State, Snake, Snake, boolean>(
-        pathOr([], ['frame', 'snake']),
-        hasSnakeCrashed
-      ),
+      gameOver: willCrash,
       snake: nextSnake,
       apple: nextApple,
     },

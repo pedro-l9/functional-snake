@@ -1,6 +1,5 @@
 import {
   scopeValue,
-  hasSnakeCrashed,
   removeIncomingOppositeMoves,
   isMoveOpposite,
   getRandomValue,
@@ -69,26 +68,6 @@ describe('Test the isMoveOpposite utility that determines wheter a move is the o
     expect(oppositeOfDown).toBe(false);
     expect(oppositeOfRight).toBe(false);
     expect(oppositeOfLeft).toBe(false);
-  });
-});
-
-describe('Test the function that determines whether the snake has crashed on itself', () => {
-  const snake = [
-    { x: 1, y: 6 },
-    { x: 2, y: 5 },
-    { x: 3, y: 5 },
-    { x: 3, y: 6 },
-    { x: 2, y: 6 },
-  ];
-
-  it('Should return false when there is nothing on the space on which the snake is going to be', () => {
-    expect(hasSnakeCrashed(snake)).toEqual(false);
-  });
-
-  it('Should return true when there is some part of the snakes body on the space on which it is going to be', () => {
-    const testSnake = [...snake, { x: 1, y: 6 }];
-
-    expect(hasSnakeCrashed(testSnake)).toEqual(true);
   });
 });
 

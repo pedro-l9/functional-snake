@@ -5,7 +5,7 @@ import { PartialFrame, NextFrame, State, Input, Canvas } from './types';
 const getNextFrame: NextFrame = (state: State) => (inputs: Input[]) => {
   const newState = nextState(state, inputs);
 
-  return [state.frame, getNextFrame(newState)];
+  return [newState.frame, getNextFrame(newState)];
 };
 
 export function startGame(canvas: Canvas): PartialFrame {

@@ -7,14 +7,13 @@ import {
   identity,
   __,
   equals,
-  includes,
   drop,
   propEq,
   pipe,
 } from 'ramda';
 
 import { MOVES } from './constants';
-import { Input, Move, Canvas, Pixel, State, Snake } from './types';
+import { Input, Move, Canvas, Pixel, State } from './types';
 
 export function inputToMove(input: Input): Move {
   return MOVES[input];
@@ -67,9 +66,6 @@ export const scopeValue = (min: number, max: number) => (
     [lt(__, min), always(max)],
     [T, identity],
   ])(value);
-
-export const hasSnakeCrashed = ([head, ...body]: Snake): boolean =>
-  includes(head, body);
 
 export const getFirst = <T>([firstItem]: Array<T>): T => firstItem;
 
