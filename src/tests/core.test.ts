@@ -6,6 +6,7 @@ import {
   nextApple,
   nextMoves,
   willCrash,
+  nextState,
 } from '../core';
 import * as utils from '../utils';
 import { State, Canvas } from '../types';
@@ -17,7 +18,6 @@ const DEFAULT_CANVAS: Canvas = Object.freeze({
 
 const INITIAL_STATE: State = Object.freeze({
   frame: {
-    gameStarted: true,
     gameOver: false,
     snake: [{ x: 1, y: 1 }],
     apple: { x: 2, y: 1 },
@@ -342,5 +342,48 @@ describe('Test the function that determines the next move queue', () => {
     const newMoveQueue = nextMoves(['RIGHT'])(testState);
 
     expect(newMoveQueue).toEqual(expectedNewQueue);
+  });
+});
+
+describe('Test the function that reconciles the next state', () => {
+  describe('Test the setting of the gameOver property', () => {
+    it('Should turn true if the snake is going to crash', () => {
+      const crashingScenario = {
+        ...INITIAL_STATE,
+        frame: {
+          ...INITIAL_STATE.frame,
+          snake: [
+            { x: 1, y: 5 },
+            { x: 2, y: 5 },
+            { x: 3, y: 5 },
+            { x: 3, y: 6 },
+            { x: 2, y: 6 },
+            { x: 1, y: 6 },
+            { x: 0, y: 6 },
+          ],
+        },
+        moves: [MOVES['DOWN']],
+      };
+
+      const newState = nextState(crashingScenario, []);
+
+      expect(newState.frame.gameOver).toEqual(true);
+    });
+
+    it('Should stay true if the game is already over', () => {
+      const gameOverScenario = {
+        ...INITIAL_STATE,
+        frame: {
+          ...INITIAL_STATE.frame,
+          snake: [{ x: 1, y: 5 }],
+          gameOver: true,
+        },
+        moves: [MOVES['DOWN']],
+      };
+
+      const newState = nextState(gameOverScenario, []);
+
+      expect(newState.frame.gameOver).toEqual(true);
+    });
   });
 });

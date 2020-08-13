@@ -18,7 +18,6 @@ export type Pixel = {
 export type Snake = Pixel[];
 
 export type Frame = {
-  gameStarted: boolean;
   gameOver: boolean;
   snake: Snake;
   apple: Pixel;

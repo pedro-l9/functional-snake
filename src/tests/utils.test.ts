@@ -181,7 +181,6 @@ describe('Test the getInitalState utility function', () => {
 
     const expectedInitialState = {
       frame: {
-        gameStarted: false,
         gameOver: false,
         snake: [
           {

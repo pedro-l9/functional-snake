@@ -48,7 +48,6 @@ export function getRandomPixel(canvas: Canvas): Pixel {
 export function getInitialState(canvas: Canvas): State {
   return {
     frame: {
-      gameStarted: false,
       gameOver: false,
       snake: [getRandomPixel(canvas)],
       apple: getRandomPixel(canvas),

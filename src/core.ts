@@ -3,7 +3,6 @@ import {
   dropLast,
   pipe,
   concat,
-  complement,
   drop,
   gt,
   propSatisfies,
@@ -15,6 +14,9 @@ import {
   map,
   always,
   includes,
+  converge,
+  pathOr,
+  or,
 } from 'ramda';
 
 import {
@@ -45,6 +47,8 @@ export const nextHead = ({
 export const nextSnake = (state: State): Snake =>
   willEat(state)
     ? [nextHead(state), ...state.frame.snake]
+    : state.frame.gameOver
+    ? dropLast<Pixel>(1, state.frame.snake)
     : [nextHead(state), ...dropLast<Pixel>(1, state.frame.snake)];
 
 export const nextApple = (state: State): Pixel =>
@@ -70,8 +74,7 @@ export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
 export const nextState = (state: State, inputs: Input[]): State =>
   applySpec<State>({
     frame: {
-      gameStarted: complement(propEq('moves', [])),
-      gameOver: willCrash,
+      gameOver: converge(or, [pathOr(false, ['frame', 'gameOver']), willCrash]),
       snake: nextSnake,
       apple: nextApple,
     },
