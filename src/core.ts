@@ -17,6 +17,10 @@ import {
   converge,
   pathOr,
   or,
+  curry,
+  cond,
+  T,
+  insert,
 } from 'ramda';
 
 import {
@@ -45,11 +49,29 @@ export const nextHead = ({
 });
 
 export const nextSnake = (state: State): Snake =>
-  willEat(state)
-    ? [nextHead(state), ...state.frame.snake]
-    : state.frame.gameOver
-    ? dropLast<Pixel>(1, state.frame.snake)
-    : [nextHead(state), ...dropLast<Pixel>(1, state.frame.snake)];
+  cond([
+    [
+      pathOr(false, ['frame', 'gameOver']),
+      pipe(
+        pathOr([], ['frame', 'snake']),
+        when<Snake, Snake>(
+          propSatisfies(gt(__, 1), 'length'),
+          curry(dropLast)(1)
+        )
+      ),
+    ],
+    [willEat, converge(insert(0), [nextHead, pathOr([], ['frame', 'snake'])])],
+    [
+      T,
+      converge(insert(0), [
+        nextHead,
+        pipe<State, Snake, Snake>(
+          pathOr<Snake>([], ['frame', 'snake']),
+          curry(dropLast)(1)
+        ),
+      ]),
+    ],
+  ])(state);
 
 export const nextApple = (state: State): Pixel =>
   willEat(state) ? getRandomPixel(state.canvas) : state.frame.apple;
