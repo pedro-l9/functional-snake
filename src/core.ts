@@ -26,6 +26,7 @@ import {
   getFirst,
 } from './utils';
 import { MOVES } from './constants';
+import { State, Pixel, Snake, Input, Move, Canvas } from './types';
 
 export const willEat = (state: State): boolean =>
   equals(nextHead(state), state.frame.apple);

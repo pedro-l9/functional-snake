@@ -9,6 +9,7 @@ import {
   getInitialState,
 } from '../utils';
 import { MOVES } from '../constants';
+import { Canvas } from '../types';
 
 const DEFAULT_CANVAS: Canvas = Object.freeze({
   cols: 15,

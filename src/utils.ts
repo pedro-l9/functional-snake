@@ -14,6 +14,7 @@ import {
 } from 'ramda';
 
 import { MOVES } from './constants';
+import { Input, Move, Canvas, Pixel, State, Snake } from './types';
 
 export function inputToMove(input: Input): Move {
   return MOVES[input];

@@ -1,43 +1,43 @@
-type Canvas = {
+export type Canvas = {
   cols: number;
   rows: number;
 };
 
-type Input = 'RIGHT' | 'LEFT' | 'UP' | 'DOWN';
+export type Input = 'RIGHT' | 'LEFT' | 'UP' | 'DOWN';
 
-type Move = {
+export type Move = {
   x: number;
   y: number;
 };
 
-type Pixel = {
+export type Pixel = {
   x: number;
   y: number;
 };
 
-type Snake = Pixel[];
+export type Snake = Pixel[];
 
-type Frame = {
+export type Frame = {
   gameStarted: boolean;
   gameOver: boolean;
   snake: Snake;
   apple: Pixel;
 };
 
-type State = {
+export type State = {
   canvas: Canvas;
   frame: Frame;
   moves: Move[];
 };
 
-type MoveMap = {
+export type MoveMap = {
   [key: string]: Move;
 };
 
-type NextFrame = {
+export type NextFrame = {
   (state: State): PartialFrame;
 };
 
-type PartialFrame = {
+export type PartialFrame = {
   (inputs: Input[]): [Frame, PartialFrame];
 };
