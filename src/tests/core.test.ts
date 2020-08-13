@@ -52,7 +52,7 @@ describe('Test the function that calculates the next position for the head of th
         moves: [MOVES['UP']],
       };
 
-      const expectedNewPosition = { x: 10, y: 11 };
+      const expectedNewPosition = { x: 10, y: 9 };
       const newPosition = nextHead(testState);
 
       expect(newPosition).toEqual(expectedNewPosition);
@@ -65,7 +65,7 @@ describe('Test the function that calculates the next position for the head of th
         moves: [MOVES['DOWN']],
       };
 
-      const expectedNewPosition = { x: 10, y: 9 };
+      const expectedNewPosition = { x: 10, y: 11 };
       const newPosition = nextHead(testState);
 
       expect(newPosition).toEqual(expectedNewPosition);
@@ -128,11 +128,11 @@ describe('Test the function that calculates the next position for the head of th
     it('must teleport the snake down if it exceeds the canvas boundaries to the top', () => {
       const testState = {
         ...INITIAL_STATE,
-        frame: { ...INITIAL_STATE.frame, snake: [{ x: 10, y: 19 }] },
+        frame: { ...INITIAL_STATE.frame, snake: [{ x: 10, y: 0 }] },
         moves: [MOVES['UP']],
       };
 
-      const expectedNewPosition = { x: 10, y: 0 };
+      const expectedNewPosition = { x: 10, y: 19 };
       const newPosition = nextHead(testState);
 
       expect(newPosition).toEqual(expectedNewPosition);
@@ -141,11 +141,11 @@ describe('Test the function that calculates the next position for the head of th
     it('must teleport the snake up if it exceeds the canvas boundaries to the bottom', () => {
       const testState = {
         ...INITIAL_STATE,
-        frame: { ...INITIAL_STATE.frame, snake: [{ x: 10, y: 0 }] },
+        frame: { ...INITIAL_STATE.frame, snake: [{ x: 10, y: 19 }] },
         moves: [MOVES['DOWN']],
       };
 
-      const expectedNewPosition = { x: 10, y: 19 };
+      const expectedNewPosition = { x: 10, y: 0 };
       const newPosition = nextHead(testState);
 
       expect(newPosition).toEqual(expectedNewPosition);
