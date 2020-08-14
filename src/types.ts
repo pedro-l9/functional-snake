@@ -1,4 +1,4 @@
-export type Canvas = {
+export type Dimensions = {
   cols: number;
   rows: number;
 };
@@ -21,10 +21,10 @@ export type Frame = {
   gameOver: boolean;
   snake: Snake;
   apple: Pixel;
+  dimensions: Dimensions;
 };
 
 export type State = {
-  canvas: Canvas;
   frame: Frame;
   moves: Move[];
 };

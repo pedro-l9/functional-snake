@@ -8,9 +8,9 @@ import {
   getInitialState,
 } from '../utils';
 import { MOVES } from '../constants';
-import { Canvas } from '../types';
+import { Dimensions } from '../types';
 
-const DEFAULT_CANVAS: Canvas = Object.freeze({
+const DEFAULT_FRAME_DIMENSIONS: Dimensions = Object.freeze({
   cols: 15,
   rows: 20,
 });
@@ -156,22 +156,26 @@ describe('Test the getRandomPixel utility function', () => {
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(0);
 
-    const upperBoundaryPseudoRandomPixel = getRandomPixel(DEFAULT_CANVAS);
-    const lowerBoundaryPseudoRandomPixel = getRandomPixel(DEFAULT_CANVAS);
+    const upperBoundaryPseudoRandomPixel = getRandomPixel(
+      DEFAULT_FRAME_DIMENSIONS
+    );
+    const lowerBoundaryPseudoRandomPixel = getRandomPixel(
+      DEFAULT_FRAME_DIMENSIONS
+    );
 
     expect(randomSpy).toHaveBeenCalledTimes(4);
     expect(upperBoundaryPseudoRandomPixel).toEqual({
-      x: DEFAULT_CANVAS.cols - 1,
-      y: DEFAULT_CANVAS.rows - 1,
+      x: DEFAULT_FRAME_DIMENSIONS.cols - 1,
+      y: DEFAULT_FRAME_DIMENSIONS.rows - 1,
     });
     expect(lowerBoundaryPseudoRandomPixel).toEqual({ x: 0, y: 0 });
   });
 });
 
 describe('Test the getInitalState utility function', () => {
-  it(`Should return a state with the gameFlags equaling false, 
+  it(`Should return a state with the gameOver flag equaling false, 
       the snake and the apple in random positions, 
-      the given canvas and the moves array with a single STOPPED move`, () => {
+      the given frame dimensions and the moves array with a single STOPPED move`, () => {
     const randomSpy = jest.spyOn(Math, 'random');
     randomSpy
       .mockReturnValueOnce(1)
@@ -184,17 +188,17 @@ describe('Test the getInitalState utility function', () => {
         gameOver: false,
         snake: [
           {
-            x: DEFAULT_CANVAS.cols - 1,
-            y: DEFAULT_CANVAS.rows - 1,
+            x: DEFAULT_FRAME_DIMENSIONS.cols - 1,
+            y: DEFAULT_FRAME_DIMENSIONS.rows - 1,
           },
         ],
         apple: { x: 0, y: 0 },
+        dimensions: DEFAULT_FRAME_DIMENSIONS,
       },
-      canvas: DEFAULT_CANVAS,
       moves: [MOVES['STOPPED']],
     };
 
-    const initalState = getInitialState(DEFAULT_CANVAS);
+    const initalState = getInitialState(DEFAULT_FRAME_DIMENSIONS);
 
     expect(initalState).toEqual(expectedInitialState);
   });

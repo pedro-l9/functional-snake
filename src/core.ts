@@ -31,7 +31,7 @@ import {
   getFirst,
 } from './utils';
 import { MOVES } from './constants';
-import { State, Pixel, Snake, Input, Move, Canvas } from './types';
+import { State, Pixel, Snake, Input, Move, Dimensions } from './types';
 
 export const willEat = (state: State): boolean =>
   equals(nextHead(state), state.frame.apple);
@@ -40,12 +40,11 @@ export const willCrash = (state: State): boolean =>
   includes(nextHead(state), drop(1, nextSnake(state)));
 
 export const nextHead = ({
-  frame: { snake },
-  canvas,
+  frame: { snake, dimensions },
   moves,
 }: State): Pixel => ({
-  x: scopeValue(0, canvas.cols - 1)(snake[0].x + moves[0].x),
-  y: scopeValue(0, canvas.rows - 1)(snake[0].y + moves[0].y),
+  x: scopeValue(0, dimensions.cols - 1)(snake[0].x + moves[0].x),
+  y: scopeValue(0, dimensions.rows - 1)(snake[0].y + moves[0].y),
 });
 
 export const nextSnake = (state: State): Snake =>
@@ -74,7 +73,7 @@ export const nextSnake = (state: State): Snake =>
   ])(state);
 
 export const nextApple = (state: State): Pixel =>
-  willEat(state) ? getRandomPixel(state.canvas) : state.frame.apple;
+  willEat(state) ? getRandomPixel(state.frame.dimensions) : state.frame.apple;
 
 export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
   state.frame.gameOver
@@ -99,7 +98,7 @@ export const nextState = (state: State, inputs: Input[]): State =>
       gameOver: converge(or, [pathOr(false, ['frame', 'gameOver']), willCrash]),
       snake: nextSnake,
       apple: nextApple,
+      dimensions: prop<string, Dimensions>('dimensions'),
     },
-    canvas: prop<string, Canvas>('canvas'),
     moves: nextMoves(inputs),
   })(state);

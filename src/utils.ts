@@ -13,7 +13,7 @@ import {
 } from 'ramda';
 
 import { MOVES } from './constants';
-import { Input, Move, Canvas, Pixel, State } from './types';
+import { Input, Move, Pixel, State, Dimensions } from './types';
 
 export function inputToMove(input: Input): Move {
   return MOVES[input];
@@ -38,21 +38,21 @@ export function getRandomValue(min: number, max: number): number {
   return Math.floor(Math.random() * max) + min;
 }
 
-export function getRandomPixel(canvas: Canvas): Pixel {
+export function getRandomPixel(frameDimensions: Dimensions): Pixel {
   return {
-    x: getRandomValue(0, canvas.cols - 1),
-    y: getRandomValue(0, canvas.rows - 1),
+    x: getRandomValue(0, frameDimensions.cols - 1),
+    y: getRandomValue(0, frameDimensions.rows - 1),
   };
 }
 
-export function getInitialState(canvas: Canvas): State {
+export function getInitialState(frameDimensions: Dimensions): State {
   return {
     frame: {
       gameOver: false,
-      snake: [getRandomPixel(canvas)],
-      apple: getRandomPixel(canvas),
+      snake: [getRandomPixel(frameDimensions)],
+      apple: getRandomPixel(frameDimensions),
+      dimensions: frameDimensions,
     },
-    canvas,
     moves: [MOVES['STOPPED']],
   };
 }

@@ -9,9 +9,9 @@ import {
   nextState,
 } from '../core';
 import * as utils from '../utils';
-import { State, Canvas } from '../types';
+import { State, Dimensions } from '../types';
 
-const DEFAULT_CANVAS: Canvas = Object.freeze({
+const DEFAULT_FRAME_DIMENSIONS: Dimensions = Object.freeze({
   cols: 20,
   rows: 20,
 });
@@ -21,8 +21,8 @@ const INITIAL_STATE: State = Object.freeze({
     gameOver: false,
     snake: [{ x: 1, y: 1 }],
     apple: { x: 2, y: 1 },
+    dimensions: DEFAULT_FRAME_DIMENSIONS,
   },
-  canvas: DEFAULT_CANVAS,
   moves: [MOVES['STOPPED']],
 });
 
