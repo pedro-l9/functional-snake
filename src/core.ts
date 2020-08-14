@@ -10,7 +10,6 @@ import {
   __,
   applySpec,
   propEq,
-  prop,
   map,
   always,
   includes,
@@ -21,6 +20,7 @@ import {
   cond,
   T,
   insert,
+  path,
 } from 'ramda';
 
 import {
@@ -31,7 +31,7 @@ import {
   getFirst,
 } from './utils';
 import { MOVES } from './constants';
-import { State, Pixel, Snake, Input, Move, Dimensions } from './types';
+import { State, Pixel, Snake, Input, Move } from './types';
 
 export const willEat = (state: State): boolean =>
   equals(nextHead(state), state.frame.apple);
@@ -98,7 +98,7 @@ export const nextState = (state: State, inputs: Input[]): State =>
       gameOver: converge(or, [pathOr(false, ['frame', 'gameOver']), willCrash]),
       snake: nextSnake,
       apple: nextApple,
-      dimensions: prop<string, Dimensions>('dimensions'),
+      dimensions: path(['frame', 'dimensions']),
     },
     moves: nextMoves(inputs),
   })(state);

@@ -345,6 +345,7 @@ describe('Test the function that determines the next move queue', () => {
   });
 });
 
+/*TODO Improve*/
 describe('Test the function that reconciles the next state', () => {
   describe('Test the setting of the gameOver property', () => {
     it('Should turn true if the snake is going to crash', () => {
@@ -384,6 +385,14 @@ describe('Test the function that reconciles the next state', () => {
       const newState = nextState(gameOverScenario, []);
 
       expect(newState.frame.gameOver).toEqual(true);
+    });
+  });
+
+  describe('Test the setting of the frame dimensions property', () => {
+    it('Should never change', () => {
+      const newState = nextState(INITIAL_STATE, []);
+
+      expect(newState.frame.dimensions).toEqual(INITIAL_STATE.frame.dimensions);
     });
   });
 });
