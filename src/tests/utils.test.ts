@@ -175,7 +175,9 @@ describe('Test the getRandomPixel utility function', () => {
 describe('Test the getInitalState utility function', () => {
   it(`Should return a state with the gameOver flag equaling false, 
       the snake and the apple in random positions, 
-      the given frame dimensions and the moves array with a single STOPPED move`, () => {
+      the given frame dimensions 
+      the zeroed score
+      and the moves array with a single STOPPED move`, () => {
     const randomSpy = jest.spyOn(Math, 'random');
     randomSpy
       .mockReturnValueOnce(1)
@@ -194,6 +196,7 @@ describe('Test the getInitalState utility function', () => {
         ],
         apple: { x: 0, y: 0 },
         dimensions: DEFAULT_FRAME_DIMENSIONS,
+        score: 0,
       },
       moves: [MOVES['STOPPED']],
     };

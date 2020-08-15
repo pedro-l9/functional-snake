@@ -22,6 +22,7 @@ const INITIAL_STATE: State = Object.freeze({
     snake: [{ x: 1, y: 1 }],
     apple: { x: 2, y: 1 },
     dimensions: DEFAULT_FRAME_DIMENSIONS,
+    score: 0,
   },
   moves: [MOVES['STOPPED']],
 });
@@ -393,6 +394,24 @@ describe('Test the function that reconciles the next state', () => {
       const newState = nextState(INITIAL_STATE, []);
 
       expect(newState.frame.dimensions).toEqual(INITIAL_STATE.frame.dimensions);
+    });
+  });
+
+  describe('Test the setting of the score property', () => {
+    it('Should not change if the snake hasnt eaten', () => {
+      const snakeWillEat = { ...INITIAL_STATE, moves: [MOVES['RIGHT']] };
+
+      const snakeHasEaten = nextState(snakeWillEat, []);
+
+      expect(snakeHasEaten.frame.score).toEqual(snakeWillEat.frame.score + 1);
+    });
+
+    it('Should increase in case the snake is going to eat', () => {
+      const snakeWontEat = { ...INITIAL_STATE, moves: [MOVES['DOWN']] };
+
+      const snakeHasntEaten = nextState(snakeWontEat, []);
+
+      expect(snakeHasntEaten.frame.score).toEqual(snakeWontEat.frame.score);
     });
   });
 });

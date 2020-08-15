@@ -22,6 +22,7 @@ export type Frame = {
   snake: Snake;
   apple: Pixel;
   dimensions: Dimensions;
+  score: number;
 };
 
 export type State = {

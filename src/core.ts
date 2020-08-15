@@ -21,6 +21,8 @@ import {
   T,
   insert,
   path,
+  inc,
+  ifElse,
 } from 'ramda';
 
 import {
@@ -95,10 +97,15 @@ export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
 export const nextState = (state: State, inputs: Input[]): State =>
   applySpec<State>({
     frame: {
-      gameOver: converge(or, [pathOr(false, ['frame', 'gameOver']), willCrash]),
+      gameOver: converge(or, [path(['frame', 'gameOver']), willCrash]),
       snake: nextSnake,
       apple: nextApple,
       dimensions: path(['frame', 'dimensions']),
+      score: ifElse(
+        willEat,
+        pipe(pathOr(0, ['frame', 'score']), inc),
+        pathOr(0, ['frame', 'score'])
+      ),
     },
     moves: nextMoves(inputs),
   })(state);

@@ -52,6 +52,7 @@ export function getInitialState(frameDimensions: Dimensions): State {
       snake: [getRandomPixel(frameDimensions)],
       apple: getRandomPixel(frameDimensions),
       dimensions: frameDimensions,
+      score: 0,
     },
     moves: [MOVES['STOPPED']],
   };
