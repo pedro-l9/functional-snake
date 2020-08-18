@@ -52,7 +52,7 @@ export const nextHead = ({
 export const nextSnake = (state: State): Snake =>
   cond([
     [
-      pathOr(false, ['frame', 'gameOver']),
+      pathOr(false, ['frame', 'hasSnakeCrashed']),
       pipe(
         pathOr([], ['frame', 'snake']),
         when<Snake, Snake>(
@@ -78,7 +78,7 @@ export const nextApple = (state: State): Pixel =>
   willEat(state) ? getRandomPixel(state.frame.dimensions) : state.frame.apple;
 
 export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
-  state.frame.gameOver
+  state.frame.hasSnakeCrashed
     ? [MOVES['STOPPED']]
     : pipe(
         concat(
@@ -97,7 +97,10 @@ export const nextMoves = (inputs: Input[]) => (state: State): Move[] =>
 export const nextState = (state: State, inputs: Input[]): State =>
   applySpec<State>({
     frame: {
-      gameOver: converge(or, [path(['frame', 'gameOver']), willCrash]),
+      hasSnakeCrashed: converge(or, [
+        path(['frame', 'hasSnakeCrashed']),
+        willCrash,
+      ]),
       snake: nextSnake,
       apple: nextApple,
       dimensions: path(['frame', 'dimensions']),

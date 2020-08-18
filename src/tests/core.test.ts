@@ -18,7 +18,7 @@ const DEFAULT_FRAME_DIMENSIONS: Dimensions = Object.freeze({
 
 const INITIAL_STATE: State = Object.freeze({
   frame: {
-    gameOver: false,
+    hasSnakeCrashed: false,
     snake: [{ x: 1, y: 1 }],
     apple: { x: 2, y: 1 },
     dimensions: DEFAULT_FRAME_DIMENSIONS,
@@ -267,12 +267,12 @@ describe('Test the function that determines the position of the next apple', () 
 });
 
 describe('Test the function that determines the next move queue', () => {
-  it('Should stop the move queue if the game is over regardless of the users input', () => {
+  it('Should stop the move queue if the snake has crashed regardless of the users input', () => {
     const testState: State = {
       ...INITIAL_STATE,
       frame: {
         ...INITIAL_STATE.frame,
-        gameOver: true,
+        hasSnakeCrashed: true,
       },
       moves: [MOVES['UP']],
     };
@@ -348,7 +348,7 @@ describe('Test the function that determines the next move queue', () => {
 
 /*TODO Improve*/
 describe('Test the function that reconciles the next state', () => {
-  describe('Test the setting of the gameOver property', () => {
+  describe('Test the setting of the hasSnakeCrashed property', () => {
     it('Should turn true if the snake is going to crash', () => {
       const crashingScenario = {
         ...INITIAL_STATE,
@@ -369,23 +369,23 @@ describe('Test the function that reconciles the next state', () => {
 
       const newState = nextState(crashingScenario, []);
 
-      expect(newState.frame.gameOver).toEqual(true);
+      expect(newState.frame.hasSnakeCrashed).toEqual(true);
     });
 
     it('Should stay true if the game is already over', () => {
-      const gameOverScenario = {
+      const snakeCrashedScenario = {
         ...INITIAL_STATE,
         frame: {
           ...INITIAL_STATE.frame,
           snake: [{ x: 1, y: 5 }],
-          gameOver: true,
+          hasSnakeCrashed: true,
         },
         moves: [MOVES['DOWN']],
       };
 
-      const newState = nextState(gameOverScenario, []);
+      const newState = nextState(snakeCrashedScenario, []);
 
-      expect(newState.frame.gameOver).toEqual(true);
+      expect(newState.frame.hasSnakeCrashed).toEqual(true);
     });
   });
 

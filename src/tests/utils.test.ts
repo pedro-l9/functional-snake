@@ -173,7 +173,7 @@ describe('Test the getRandomPixel utility function', () => {
 });
 
 describe('Test the getInitalState utility function', () => {
-  it(`Should return a state with the gameOver flag equaling false, 
+  it(`Should return a state with the hasSnakeCrashed flag equaling false, 
       the snake and the apple in random positions, 
       the given frame dimensions 
       the zeroed score
@@ -187,7 +187,7 @@ describe('Test the getInitalState utility function', () => {
 
     const expectedInitialState = {
       frame: {
-        gameOver: false,
+        hasSnakeCrashed: false,
         snake: [
           {
             x: DEFAULT_FRAME_DIMENSIONS.cols - 1,

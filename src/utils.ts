@@ -48,7 +48,7 @@ export function getRandomPixel(frameDimensions: Dimensions): Pixel {
 export function getInitialState(frameDimensions: Dimensions): State {
   return {
     frame: {
-      gameOver: false,
+      hasSnakeCrashed: false,
       snake: [getRandomPixel(frameDimensions)],
       apple: getRandomPixel(frameDimensions),
       dimensions: frameDimensions,
