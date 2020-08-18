@@ -4,7 +4,7 @@
   "description": "A snake game engine written in a functional-ish way",
   "repository": "pedro-l9/functional-snake",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
