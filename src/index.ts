@@ -11,3 +11,5 @@ const getNextFrame: NextFrame = (state: State) => (inputs: Input[]) => {
 export function startGame(frameDimensions: Dimensions): PartialFrame {
   return getNextFrame(getInitialState(frameDimensions));
 }
+
+export * as types from './types';

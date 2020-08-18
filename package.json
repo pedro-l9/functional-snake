@@ -5,6 +5,9 @@
   "repository": "pedro-l9/functional-snake",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest --watchAll --coverage",
     "test:ci": "CI=true npm test -- --watchAll=false",
