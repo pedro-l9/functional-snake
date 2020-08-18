@@ -1,6 +1,6 @@
 {
   "name": "@pedro-l9/functional-snake",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "A snake game engine written in a functional-ish way",
   "repository": "pedro-l9/functional-snake",
   "main": "dist/index.js",
