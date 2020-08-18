@@ -12,7 +12,7 @@
     "test": "jest --watchAll --coverage",
     "test:ci": "CI=true npm test -- --watchAll=false",
     "test:ci:report": "npm run test:ci && codecov --token=$CODECOV_TOKEN",
-    "prepublish": "tsc",
+    "prepare": "tsc",
     "lint": "eslint",
     "lint:ci": "eslint '*/**/*.{js,ts}' --quiet",
     "format": "prettier"
