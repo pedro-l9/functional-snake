@@ -12,4 +12,4 @@ export function startGame(frameDimensions: Dimensions): PartialFrame {
   return getNextFrame(getInitialState(frameDimensions));
 }
 
-export * as types from './types';
+export * from './types';
